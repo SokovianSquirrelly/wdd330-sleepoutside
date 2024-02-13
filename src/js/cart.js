@@ -1,4 +1,4 @@
-import { getLocalStorage } from "./utils.mjs";
+import { getLocalStorage, renderHeaderFooter } from "./utils.mjs";
 
 function renderCartContents() {
   const cartItems = getLocalStorage("so-cart");
@@ -11,6 +11,8 @@ function renderCartContents() {
     document.querySelector(".product-list").innerHTML = "No items in the cart.";
   }
 }
+
+renderHeaderFooter();
 
 function cartItemTemplate(item) {
   const newItem = `<li class="cart-card divider">

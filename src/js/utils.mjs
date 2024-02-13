@@ -1,4 +1,5 @@
-
+import MainHeader from "./components/MainHeader.svelte";
+import MainFooter from "./components/MainFooter.svelte";
 
 // wrapper for querySelector...returns matching element
 export function qs(selector, parent = document) {
@@ -29,4 +30,20 @@ export function getParam(param)
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
   return urlParams.get(param)
+}
+
+export function renderHeaderFooter()
+{
+  new MainHeader({
+    target: document.querySelector("#main-header"),
+    props: { cartCount: getCartCount() },
+  });
+  new MainFooter({
+    target: document.querySelector("#main-footer"),
+  });
+}
+
+export function getCartCount() {
+  const count = getLocalStorage("so-cart")?.length ?? 0;
+  return count;
 }

@@ -1,5 +1,6 @@
 import { findProductById } from "./productData.mjs";
 import { setLocalStorage } from "./utils.mjs";
+import { setLocalStorage, getLocalStorage } from "./utils.mjs";
 
 let product = {};
 
@@ -13,7 +14,20 @@ export default async function productDetails(productId, selector) {
   document.getElementById("addToCart").addEventListener("click", addToCart);
 }
 function addToCart() {
-  setLocalStorage("so-cart", product);
+  let cartContents = getLocalStorage("so-cart");
+
+  // if there is no cart, create one as an empty array
+  if (!cartContents) {
+    cartContents = [];
+  }
+  // add the current product to the cart
+  cartContents.push(product);
+
+  // save the cart to local storage
+  setLocalStorage("so-cart", cartContents);
+
+  // update the cart count in the header
+  cartCount.set(cartContents.length);
 }
 
 function productDetailsTemplate(product) {
