@@ -1,5 +1,4 @@
 import { findProductById } from "./productData.mjs";
-import { setLocalStorage } from "./utils.mjs";
 import { setLocalStorage, getLocalStorage } from "./utils.mjs";
 
 let product = {};
