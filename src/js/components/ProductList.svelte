@@ -1,11 +1,25 @@
-<script type="module">
-    import { getData } from "../productData.mjs";
-    
-    // this is how we make a prop in svelte
-    export let category;
-    // if you are looking at this thinking that's strange to just stop with a promise
-    // you would be right.  This will make more sense in a bit...stay tuned.
-    let promise = getData(category);
-    </script>
-    
-    <p>Top products: {category}</p>
+<script>
+    import { getLocalStorage } from "../utils.mjs";
+    const cartItems = getLocalStorage("so-cart");
+  </script>
+  
+  <h2>My Cart</h2>
+  
+  <ul class="product-list">
+    {#each cartItems as item}
+      <li class="cart-card divider">
+        <a
+          href="/product_pages/index.html?productid={item.Id}"
+          class="cart-card__image"
+        >
+          <img src={item.Image} alt={item.Name} />
+        </a>
+        <a href="#">
+          <h2 class="card__name">{item.Name}</h2>
+        </a>
+        <p class="cart-card__color">{item.Colors[0].ColorName}</p>
+        <p class="cart-card__quantity">qty: 1</p>
+        <p class="cart-card__price">${item.FinalPrice}</p>
+      </li>
+    {/each}
+  </ul>
