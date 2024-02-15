@@ -15,8 +15,7 @@ export default async function productDetails(productId, selector) {
 
 // add the current product to the cart
 function addToCart() {
-  let cartContents = [];
-  cartContents = getLocalStorage("so-cart");
+  let cartContents = getLocalStorage("so-cart");
   // if there is no cart, create one as an empty array
   if (!cartContents) {
     cartContents = [];  }
@@ -24,6 +23,7 @@ function addToCart() {
   cartContents.push(product);
   // save the cart to local storage
   setLocalStorage("so-cart", cartContents);
+  let cartCount;
   // update the cart count in the header
   cartCount.set(cartContents.length);
 }
