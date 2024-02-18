@@ -1,4 +1,5 @@
-import { findProductById } from "./productData.mjs";
+import { findProductById } from "./externalServices.mjs";
+import { cartCount } from "./stores.mjs";
 import { setLocalStorage, getLocalStorage } from "./utils.mjs";
 
 let product = {};
@@ -12,19 +13,16 @@ export default async function productDetails(productId, selector) {
   // once the HTML is rendered we can add a listener to Add to Cart button
   document.getElementById("addToCart").addEventListener("click", addToCart);
 }
-
-// add the current product to the cart
 function addToCart() {
   let cartContents = getLocalStorage("so-cart");
-  // if there is no cart, create one as an empty array
+  //check to see if there was anything there
   if (!cartContents) {
-    cartContents = [];  }
-  // add the current product to the cart
+    cartContents = [];
+  }
+  // then add the current product to the list
   cartContents.push(product);
-  // save the cart to local storage
   setLocalStorage("so-cart", cartContents);
-  let cartCount;
-  // update the cart count in the header
+  // update the visible cartCount
   cartCount.set(cartContents.length);
 }
 
@@ -33,7 +31,7 @@ function productDetailsTemplate(product) {
   <h2 class="divider">${product.NameWithoutBrand}</h2>
   <img
     class="divider"
-    src="${product.Image}"
+    src="${product.Images.PrimaryLarge}"
     alt="${product.Name}"
   />
   <p class="product-card__price">$${product.FinalPrice}</p>
