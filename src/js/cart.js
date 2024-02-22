@@ -1,8 +1,8 @@
-import ShoppingCart from "./components/ShoppingCart.svelte";
-import { loadHeaderFooter } from "./utils.mjs";
+import { html, render } from "htm/preact";
+import renderHeaderFooter from "./renderHeaderFooter.mjs";
+import { renderShoppingCart } from "./shoppingCart.mjs";
+import ShoppingCart from "./ShoppingCart.mjs";
 
-loadHeaderFooter();
-
-new ShoppingCart({
-  target: document.querySelector(".products"),
-});
+renderHeaderFooter();
+// render(html`<${ShoppingCart} />`, document.querySelector(".product"));
+renderShoppingCart(".products");
