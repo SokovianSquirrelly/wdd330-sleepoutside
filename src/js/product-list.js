@@ -1,11 +1,11 @@
-import { html, render } from "htm/preact";
-import renderHeaderFooter from "./renderHeaderFooter.mjs";
-import ProductList from "./productList.mjs";
+import ProductList from "./components/ProductList.svelte";
+import { loadHeaderFooter, getParam } from "./utils.mjs";
 
-renderHeaderFooter();
+loadHeaderFooter();
 
-// render takes two arguments: a component, and the element in the DOM we want the component rendered into.
-render(
-  html`<${ProductList} category="tents" />`,
-  document.querySelector(".products")
-);
+const category = getParam("category");
+
+new ProductList({
+  target: document.querySelector(".products"),
+  props: { category: category },
+});
