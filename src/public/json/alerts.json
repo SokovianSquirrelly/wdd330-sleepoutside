@@ -1,0 +1,27 @@
+[
+  {
+    "message": "This is only a test",
+    "background": "darkblue",
+    "color": "white"
+  },
+  {
+    "message": "Alert test 2",
+    "background": "red",
+    "color": "white"
+  },
+  {
+    "message": "Alert test 3",
+    "background": "yellow",
+    "color": "black"
+  },
+  {
+    "message": "Alert test 4",
+    "background": "green",
+    "color": "white"
+  },
+  {
+    "message": "Alert test 5",
+    "background": "blue",
+    "color": "white"
+  }
+]

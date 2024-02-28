@@ -38,7 +38,7 @@
         href="/product_pages/index.html?productid={item.Id}"
         class="cart-card__image"
       >
-        <img src={item.Image} alt={item.Name} />
+        <img src={item.Images.PrimaryMedium} alt={item.Name} />
       </a>
       <a href="/product_pages/index.html?productid={item.Id}">
         <h2 class="card__name">{item.Name}</h2>
@@ -64,10 +64,9 @@
   {/each}
   <li class="cart-card divider">
     <h2 class="cart-card__total">
-      Total: ${cartItems.reduce(
-        (acc, item) => acc + item.FinalPrice * item.quantity,
-        0,
-      )}
+      Total: ${cartItems
+        .reduce((acc, item) => acc + item.FinalPrice * item.quantity, 0)
+        .toFixed(2)}
     </h2>
   </li>
 </ul>

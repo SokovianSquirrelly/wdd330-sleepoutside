@@ -11,10 +11,10 @@ export default async function productDetails(productId, selector) {
   const el = document.querySelector(selector);
   el.insertAdjacentHTML("afterBegin", productDetailsTemplate(product));
   // once the HTML is rendered we can add a listener to Add to Cart button
-  document.getElementById("addToCart").addEventListener("click", addToCart);
+  document.getElementById("addToCart").addEventListener("click", callAddToCart);
 }
 
-function addToCart() {
+function callAddToCart() {
   let cartContents = getLocalStorage("so-cart");
   //check to see if there was anything there
   if (!cartContents) {
@@ -48,6 +48,7 @@ function addToCart() {
   setLocalStorage("so-cart", cartContents);
   // update the visible cartCount
   cartCount.set(cartContents.length);
+  location.reload();
 }
 
 function productDetailsTemplate(product) {

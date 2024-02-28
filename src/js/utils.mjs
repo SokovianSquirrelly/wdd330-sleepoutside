@@ -37,7 +37,8 @@ export function getParam(param) {
   return urlParams.get(param);
 }
 export function getCartCount() {
-  const count = getLocalStorage("so-cart")?.length ?? 0;
+  const cartItems = getLocalStorage("so-cart") ?? [];
+  const count = cartItems.reduce((total, item) => total + item.quantity, 0);
   return count;
 }
 export function loadHeaderFooter() {

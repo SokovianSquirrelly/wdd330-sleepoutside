@@ -265,3 +265,16 @@ footer {
   font-size: var(--small-font);
   padding: 1em;
 }
+
+.alert-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding-top: 2em;
+}
+.alert-list p {
+  margin: 0.5em 0;
+  padding: 0.5em;
+  border-radius: 5px;
+  width: 24%;
+}
