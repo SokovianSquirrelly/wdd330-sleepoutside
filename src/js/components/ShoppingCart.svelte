@@ -35,12 +35,12 @@
   {#each cartItems as item}
     <li class="cart-card divider">
       <a
-        href="/product_pages/index.html?productid={item.Id}"
+        href="/product_pages/index.html?product={item.Id}"
         class="cart-card__image"
       >
         <img src={item.Images.PrimaryMedium} alt={item.Name} />
       </a>
-      <a href="/product_pages/index.html?productid={item.Id}">
+      <a href="/product_pages/index.html?product={item.Id}">
         <h2 class="card__name">{item.Name}</h2>
       </a>
       <p class="cart-card__color">{item.Colors[0].ColorName}</p>
@@ -52,7 +52,7 @@
         on:change={handleQuantityChange}
       >
         <option value="0">0</option>
-        {#each Array.from({ length: item.quantity + 2 }, (_, i) => i + 1) as number}
+        {#each Array.from({ length: item.quantity + 5 }, (_, i) => i + 1) as number}
           <option value={number} selected={number === item.quantity}>
             {number}
           </option>
