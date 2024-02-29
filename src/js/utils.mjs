@@ -1,5 +1,6 @@
 import MainFooter from "./components/MainFooter.svelte";
 import MainHeader from "./components/MainHeader.svelte";
+import alerts from "./components/alerts.svelte";
 
 // wrapper for querySelector...returns matching element
 export function qs(selector, parent = document) {
@@ -49,4 +50,19 @@ export function loadHeaderFooter() {
   new MainFooter({
     target: document.querySelector("#main-footer"),
   });
+}
+export function alert(){
+new alerts({
+  target: document.querySelector("#alerts"),
+});
+}
+export function getCartTotal() {
+  const cartItems = getLocalStorage("so-cart") ?? [];
+  const total = cartItems.reduce((total, item) => total + item.FinalPrice * item.quantity, 0);
+  return total.toFixed(2);
+}
+export function getCartTotalItems() {
+  const cartItems = getLocalStorage("so-cart") ?? [];
+  const total = cartItems.reduce((total, item) => total + item.quantity, 0);
+  return total;
 }

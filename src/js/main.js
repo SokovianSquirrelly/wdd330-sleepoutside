@@ -1,3 +1,8 @@
-import { loadHeaderFooter } from "./utils.mjs";
+import { loadHeaderFooter, alert } from "./utils.mjs";
+import { MainPageAlerts } from "./config";
 
+
+if (MainPageAlerts) {
+    alert();
+    }
 loadHeaderFooter();

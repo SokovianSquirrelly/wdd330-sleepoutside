@@ -278,3 +278,44 @@ footer {
   border-radius: 5px;
   width: 24%;
 }
+#checkout-button{
+  align-content: center;
+  margin-left: 35vw;
+}
+#checkout-button > a {
+  text-decoration: none;
+  color: white;
+}
+.form-block{
+  margin: auto;
+  margin-bottom: 2em;
+  width: 75%;
+  padding: 1em;
+  border: 1px solid var(--light-grey);
+  border-radius: 5px;
+  display: flexbox;
+  justify-content: center;
+  align-items: center;
+}
+.form-inputs {
+  /* CSS properties here */
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  padding: 2em;
+  margin-bottom: 2em;
+}
+.form-inputs > input {
+  height: 3em;
+  width: 100%;
+  padding: 2em;
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+  z-index: 3;
+}
+.form-inputs > label {
+  margin-bottom: 1em;
+  font-size: 1.5em;
+  font-weight: bold;;
+}
+

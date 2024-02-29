@@ -1,5 +1,5 @@
 <script>
-  import { getLocalStorage, removeLocalStorage } from "../utils.mjs";
+  import { getLocalStorage, removeLocalStorage, getCartTotal } from "../utils.mjs";
   let cartItems = getLocalStorage("so-cart");
   if (!cartItems) {
     cartItems = [];
@@ -64,9 +64,9 @@
   {/each}
   <li class="cart-card divider">
     <h2 class="cart-card__total">
-      Total: ${cartItems
-        .reduce((acc, item) => acc + item.FinalPrice * item.quantity, 0)
-        .toFixed(2)}
+      Total: ${getCartTotal()}
     </h2>
+    <button id="checkout-button"><a href="/checkout/">Checkout</a></button>
   </li>
 </ul>
+
