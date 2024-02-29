@@ -1,7 +1,12 @@
 <script>
-import { getCartTotal, getCartTotalItems } from "../utils.mjs";
+import { getCartTotal, getCartTotalItems, getLocalStorage, formDataToJSON } from "../utils.mjs";
 import { taxRate, baseShipping, additionalIteams } from "/js/config.js";
+import { checkout } from "../externalServices.mjs";
 
+//props
+export let key = "so-cart";
+
+    let list = [];
     let customerName = "";
     let address = "";
     let cardNumber = "";
@@ -17,13 +22,13 @@ import { taxRate, baseShipping, additionalIteams } from "/js/config.js";
     let total = (subTotal + tax + baseShipping);
     let shipping = parseFloat(baseShipping) + (getCartTotalItems() * additionalIteams);
 
-    function handleSubmit() {
-        // Stub Handle form submission
+    const init = function () {
+    list = getLocalStorage(key);
     }
 
     function updateOrderSummary(){
         document.getElementById("order-summary").innerHTML = `
-        <p>Item Subtotal({getCartTotalItems()}): ${subTotal}</p>
+        <p>Item Subtotal(${getCartTotalItems()}): $${subTotal}</p>
         <p>Shipping: ${shipping}</p>
         <p>Tax: ${tax.toFixed(2)}</p>
         <p>Total: ${total.toFixed(2)}</p>`;
@@ -35,9 +40,42 @@ import { taxRate, baseShipping, additionalIteams } from "/js/config.js";
         <p>Tax: $ ---- </p>
         <p>Total: $ -----</p>`;
     }
+
+    const packageItems = function (items) {
+            const simpleItems = items.map((item) => {
+                console.log(item);
+                return {
+                    id: item.Id,
+                    price: item.FinalPrice,
+                    name: item.Name,
+                    quantity: 1,
+                };
+            });
+        return simpleItems;
+    };
+
+  const handleSubmit = async function () {
+    const json = formDataToJSON(this);
+    // add totals, and item details
+    json.orderDate = new Date();
+    json.orderTotal = total;
+    json.tax = tax;
+    json.shipping = shipping;
+    json.items = packageItems(list);
+    console.log(json);
+    try {
+      const res = await checkout(json);
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  init();
+
 </script>
 
-<form on:submit={handleSubmit}>
+<form on:submit|preventDefault={handleSubmit}>
     <fieldset class="form-inputs" id="shipping-info">
         <legend>Shipping Information</legend>
     <label for="customerName">Customer Name:</label>

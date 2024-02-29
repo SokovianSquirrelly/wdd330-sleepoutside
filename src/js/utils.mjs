@@ -66,3 +66,15 @@ export function getCartTotalItems() {
   const total = cartItems.reduce((total, item) => total + item.quantity, 0);
   return total;
 }
+
+// takes a form element and returns an object where the key is the "name" of the form input.
+export function formDataToJSON(formElement) {
+  const formData = new FormData(formElement),
+    convertedJSON = {};
+
+  formData.forEach(function (value, key) {
+    convertedJSON[key] = value;
+  });
+
+  return convertedJSON;
+}
