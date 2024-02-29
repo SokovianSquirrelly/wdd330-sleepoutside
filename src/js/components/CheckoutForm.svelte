@@ -48,7 +48,7 @@ export let key = "so-cart";
                     id: item.Id,
                     price: item.FinalPrice,
                     name: item.Name,
-                    quantity: 1,
+                    quantity: item.quantity,
                 };
             });
         return simpleItems;
@@ -58,6 +58,17 @@ export let key = "so-cart";
     const json = formDataToJSON(this);
     // add totals, and item details
     json.orderDate = new Date();
+
+    json.fname = customerName;
+    json.lname = customerName; // no last name
+    json.street = address;
+    json.city = city;
+    json.state = state;
+    json.zip = zip;
+    json.cardNumber = cardNumber;
+    json.expiration = expirationDate;
+    json.code = securityCode;
+
     json.orderTotal = total;
     json.tax = tax;
     json.shipping = shipping;

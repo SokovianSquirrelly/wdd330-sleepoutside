@@ -19,6 +19,7 @@ export async function findProductById(id) {
   return product.Result;
 }
 export async function checkout(payload) {
+  console.log("payload of checkout function", payload);
   const options = {
     method: "POST",
     headers: {
@@ -26,5 +27,5 @@ export async function checkout(payload) {
     },
     body: JSON.stringify(payload),
   };
-  return await fetch(baseURL + "checkout/", options).then(convertToJson);
+  return await fetch(baseURL + "checkout/", options).stringify();
 }
