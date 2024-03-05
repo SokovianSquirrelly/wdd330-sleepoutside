@@ -1,5 +1,5 @@
 <script>
-import { getCartTotal, getCartTotalItems, getLocalStorage, formDataToJSON } from "../utils.mjs";
+import { getCartTotal, getCartTotalItems, getLocalStorage, formDataToJSON, alertMessage, removeAllAlerts, setLocalStorage} from "../utils.mjs";
 import { taxRate, baseShipping, additionalIteams } from "/js/config.js";
 import { checkout } from "../externalServices.mjs";
 
@@ -7,7 +7,8 @@ import { checkout } from "../externalServices.mjs";
 export let key = "so-cart";
 
     let list = [];
-    let customerName = "";
+    let custFirtName = "";
+    let custLastName = "";
     let address = "";
     let cardNumber = "";
     let expirationDate = "";
@@ -29,9 +30,9 @@ export let key = "so-cart";
     function updateOrderSummary(){
         document.getElementById("order-summary").innerHTML = `
         <p>Item Subtotal(${getCartTotalItems()}): $${subTotal}</p>
-        <p>Shipping: ${shipping}</p>
-        <p>Tax: ${tax.toFixed(2)}</p>
-        <p>Total: ${total.toFixed(2)}</p>`;
+        <p>Shipping: $${shipping.toFixed(2)}</p>
+        <p>Tax: $${tax.toFixed(2)}</p>
+        <p>Total: $${total.toFixed(2)}</p>`;
     }
     function clearOrderSummary(){
         document.getElementById("order-summary").innerHTML = `
@@ -59,8 +60,8 @@ export let key = "so-cart";
     // add totals, and item details
     json.orderDate = new Date();
 
-    json.fname = customerName;
-    json.lname = customerName; // no last name
+    json.fname = custFirtName;
+    json.lname = custLastName;
     json.street = address;
     json.city = city;
     json.state = state;
@@ -73,11 +74,21 @@ export let key = "so-cart";
     json.tax = tax;
     json.shipping = shipping;
     json.items = packageItems(list);
-    console.log(json);
     try {
       const res = await checkout(json);
       console.log(res);
-    } catch (err) {
+      // clear the cart
+      setLocalStorage("so-cart", []);
+      // redirect to success page
+      location.assign("/checkout/success.html");
+    } 
+    catch (err) {
+    // get rid of any preexisting alerts.
+    console.log(err.message);
+    removeAllAlerts();
+      for (let message in err.message) {
+        alertMessage(err.message[message]);
+      }
       console.log(err);
     }
   };
@@ -89,9 +100,11 @@ export let key = "so-cart";
 <form on:submit|preventDefault={handleSubmit}>
     <fieldset class="form-inputs" id="shipping-info">
         <legend>Shipping Information</legend>
-    <label for="customerName">Customer Name:</label>
-    <input type="text" id="customerName" bind:value={customerName} required>
-
+        <label for="custFirtName">Customer First Name:</label>
+        <input type="text" id="custFirtName" bind:value={custFirtName} required>
+        <label for="custLastName">Customer Name:</label>
+        <input type="text" id="custLastName" bind:value={custLastName} required>
+        
     <label for="address">Address:</label>
     <input type="text" id="address" bind:value={address} required>
     <label for="city">City:</label>
