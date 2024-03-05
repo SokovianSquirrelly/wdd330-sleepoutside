@@ -52,8 +52,8 @@ export function loadHeaderFooter() {
     target: document.querySelector("#main-footer"),
   });
 }
-export function getCartTotal() {
-  const cartItems = getLocalStorage("so-cart") ?? [];
+export function getCartTotal(key) {
+  const cartItems = getLocalStorage(key) ?? [];
   const total = cartItems.reduce((total, item) => total + item.FinalPrice * item.quantity, 0);
   return total.toFixed(2);
 }

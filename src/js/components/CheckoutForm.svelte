@@ -18,7 +18,7 @@ export let key = "so-cart";
     let zip = "";
 
 
-    let subTotal = parseFloat(getCartTotal());
+    let subTotal = parseFloat(getCartTotal(key));
     let tax = subTotal * taxRate;
     let total = (subTotal + tax + baseShipping);
     let shipping = parseFloat(baseShipping) + (getCartTotalItems() * additionalIteams);
@@ -33,6 +33,7 @@ export let key = "so-cart";
         <p>Shipping: $${shipping.toFixed(2)}</p>
         <p>Tax: $${tax.toFixed(2)}</p>
         <p>Total: $${total.toFixed(2)}</p>`;
+        setLocalStorage("orderTotal", [total]);
     }
     function clearOrderSummary(){
         document.getElementById("order-summary").innerHTML = `
@@ -78,6 +79,8 @@ export let key = "so-cart";
       const res = await checkout(json);
       console.log(res);
       // clear the cart
+      const order = getLocalStorage("so-cart");
+      setLocalStorage("order", order);
       setLocalStorage("so-cart", []);
       // redirect to success page
       location.assign("/checkout/success.html");

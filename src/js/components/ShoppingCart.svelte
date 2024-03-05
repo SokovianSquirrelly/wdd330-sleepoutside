@@ -64,7 +64,7 @@
   {/each}
   <li class="cart-card divider">
     <h2 class="cart-card__total">
-      Total: ${getCartTotal()}
+      Total: ${getCartTotal("so-cart")}
     </h2>
     <button id="checkout-button"><a href="/checkout/">Checkout</a></button>
   </li>
