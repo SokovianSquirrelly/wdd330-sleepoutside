@@ -32,4 +32,25 @@ export async function checkout(payload) {
   return await fetch(baseURL + "checkout/", options).then(convertToJson);
 }
 
-export async function loginRequest(cred) {}
+export async function loginRequest(cred) {
+  const res = await fetch("http://server-nodejs.cit.byui.edu:3000/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(cred),
+  });
+  const token = await convertToJson(res);
+  return token;
+}
+
+export async function requestOrder() {
+  const token = getLocalStorage("so-token");
+  const response = await fetch("http://server-nodejs.cit.byui.edu:3000/" + "order", {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  console.log("response", response);
+}

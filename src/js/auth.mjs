@@ -7,10 +7,12 @@ const tokenKey = "so-token";
 export async function login(creds, redirect = "/") {
   try {
     const token = await loginRequest(creds);
-    setLocalStorage(tokenKey, token);
-    console.log(isTokenValid(token));
-    // because of the default arg provided above...if no redirect is provided send them Home.
-    // window.location = redirect;
+    setLocalStorage(tokenKey, token.accessToken);
+    if (isTokenValid(token.accessToken)){
+          // because of the default arg provided above...if no redirect is provided send them Home.
+    window.location = redirect;
+    }
+
   } catch (err) {
     alertMessage(err.message);
   }
@@ -23,7 +25,7 @@ export function isTokenValid(token) {
   // the page they were trying to access so we can send them back after the login!
   if (token) {
     // decode the token
-    const decoded = jwt_decode(token);
+    const decoded = jwtDecode(token);
     // get the current date
     let currentDate = new Date();
     // JWT exp is in seconds, the time from our current date will be milliseconds.
@@ -41,6 +43,7 @@ export function isTokenValid(token) {
 }
 
 export function checkLogin() {
+  // debugger;
   // get the token from localStorage
   const token = getLocalStorage(tokenKey);
   // use the isTokenValid function to check the validity of our token
