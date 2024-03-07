@@ -46,7 +46,6 @@ export function getCartCount() {
 export function loadHeaderFooter() {
   new MainHeader({
     target: document.querySelector("#main-header"),
-    props: { cartCount: getCartCount() },
   });
   new MainFooter({
     target: document.querySelector("#main-footer"),
@@ -54,7 +53,10 @@ export function loadHeaderFooter() {
 }
 export function getCartTotal(key) {
   const cartItems = getLocalStorage(key) ?? [];
-  const total = cartItems.reduce((total, item) => total + item.FinalPrice * item.quantity, 0);
+  const total = cartItems.reduce(
+    (total, item) => total + item.FinalPrice * item.quantity,
+    0
+  );
   return total.toFixed(2);
 }
 export function getCartTotalItems() {
@@ -66,40 +68,53 @@ export function getCartTotalItems() {
 // takes a form element and returns an object where the key is the "name" of the form input.
 export function formDataToJSON(formElement) {
   const formData = new FormData(formElement),
-  convertedJSON = {};
-  
+    convertedJSON = {};
+
   formData.forEach(function (value, key) {
     convertedJSON[key] = value;
   });
-  
+
   return convertedJSON;
 }
 
-export function alert(){
-new alerts({
-  target: document.querySelector("#alerts"),
-});
+export function alert() {
+  new alerts({
+    target: document.querySelector("#alerts"),
+  });
 }
 
 export function alertMessage(message, scroll = true, duration = 3000) {
   console.log("alertMessageCall", message);
   const alert = new AlertMessage({
-      target: document.querySelector("body"),
-      anchor: document.querySelector("main"),
-      props: {
+    target: document.querySelector("body"),
+    anchor: document.querySelector("main"),
+    props: {
       message,
-      },
+    },
   });
   // make sure they see the alert by scrolling to the top of the window
   //we may not always want to do this...so default to scroll=true, but allow it to be passed in and overridden.
   if (scroll) window.scrollTo(0, 0);
-  
+
   // left this here to show how you could remove the alert automatically after a certain amount of time.
   // setTimeout(function () {
   //   alert.$destroy();
   // }, duration);
-  }
-  export function removeAllAlerts() {
-    const alerts = document.querySelectorAll(".alert");
-    alerts.forEach((alert) => alert.remove());
-  }
+}
+export function removeAllAlerts() {
+  const alerts = document.querySelectorAll(".alert");
+  alerts.forEach((alert) => alert.remove());
+}
+
+export function packageItems(items) {
+  const simpleItems = items.map((item) => {
+    console.log(item);
+    return {
+      id: item.Id,
+      price: item.FinalPrice,
+      name: item.Name,
+      quantity: item.quantity,
+    };
+  });
+  return simpleItems;
+}

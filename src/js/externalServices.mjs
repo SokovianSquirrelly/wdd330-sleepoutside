@@ -4,9 +4,8 @@ async function convertToJson(res) {
   if (res.ok) {
     console.log("IT WORKED", res);
     return data;
-  } 
-  else {
-    throw { name: 'servicesError', message: data };
+  } else {
+    throw { name: "servicesError", message: data };
   }
 }
 
@@ -32,3 +31,5 @@ export async function checkout(payload) {
   };
   return await fetch(baseURL + "checkout/", options).then(convertToJson);
 }
+
+export async function loginRequest(cred) {}
